@@ -59,7 +59,7 @@ class Img:
                 rotated[j][n - i - 1] = self.data[i][j]
         self.data = rotated
         # TODO remove the `raise` below, and write your implementation
-        ## raise NotImplementedError()
+        ## raise NotImplementedError()g
 
     def salt_n_pepper(self):
         # TODO remove the `raise` below, and write your implementation
