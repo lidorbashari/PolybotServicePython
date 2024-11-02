@@ -1,5 +1,6 @@
 from pathlib import Path
 from matplotlib.image import imread, imsave
+import random
 
 
 def rgb2gray(rgb):
@@ -51,17 +52,45 @@ class Img:
             self.data[i] = res
 
     def rotate(self):
+        n=len(self.data)
+        m=len(self.data[0])
+        rotated = [[0] * n for _ in range(m)]
+        for i in range(n):
+            for j in range(m):
+                rotated[j][n - i - 1] = self.data[i][j]
+        self.data = rotated
         # TODO remove the `raise` below, and write your implementation
-        raise NotImplementedError()
+        ## raise NotImplementedError()g
 
     def salt_n_pepper(self):
-        # TODO remove the `raise` below, and write your implementation
-        raise NotImplementedError()
+         for i in range(len(self.data)):
+             for j in range(len(self.data)):
+                random_decimal = random.uniform(0, 1)
+                if random_decimal<0.2:
+                    self.data[i][j] = 255
+                elif random_decimal>0.8:
+                    self.data[i][j] = 255
 
-    def concat(self, other_img, direction='horizontal'):
         # TODO remove the `raise` below, and write your implementation
-        raise NotImplementedError()
+     #   raise NotImplementedError()
+
+    def concat(self, other_img):
+        if len(self.data) != len(other_img.data):
+            raise ValueError("The images do not have the same height for concatenation.")
+        concatenated_data = []
+        for i in range(len(self.data)):
+            concatenated_row = self.data[i] + other_img.data[i]
+            concatenated_data.append(concatenated_row)
+        self.data = concatenated_data
+        # TODO remove the `raise` below, and write your implementation
+
 
     def segment(self):
+        for i in range(len(self.data)):
+            for j in range(len(self.data[0])):
+                if self.data[i][j] > 100:
+                    self.data[i][j] = 255
+                else:
+                    self.data[i][j] = 0
         # TODO remove the `raise` below, and write your implementation
-        raise NotImplementedError()
+      #  raise NotImplementedError()
