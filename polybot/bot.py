@@ -75,4 +75,49 @@ class QuoteBot(Bot):
 
 
 class ImageProcessingBot(Bot):
-    pass
+    def __init__(self, token, bot_app_url):
+        super().__init__(token, bot_app_url)
+
+    def handle_message(self, msg):
+        logger.info(f'Incoming message: {msg}')
+
+        try:
+            if self.is_current_msg_photo(msg):
+                file_path = self.download_user_photo(msg)
+                img = Img(file_path)  # יצירת אובייקט תמונה
+
+                caption = msg.get('caption', '').lower()
+
+
+                if caption == 'blur':
+                    img.blur(blur_level=16)
+                    new_image_path = img.save_img()
+                    self.send_photo(msg['chat']['id'], new_image_path)
+                elif caption == 'contour':
+                    img.contour()
+                    new_image_path = img.save_img()
+                    self.send_photo(msg['chat']['id'], new_image_path)
+                elif caption == 'rotate':
+                    img.rotate()
+                    new_image_path = img.save_img()
+                    self.send_photo(msg['chat']['id'], new_image_path)
+                elif caption == 'segment':
+                    img.segment()
+                    new_image_path = img.save_img()
+                    self.send_photo(msg['chat']['id'], new_image_path)
+                elif caption == 'salt and pepper':
+                    img.salt_n_pepper()
+                    new_image_path = img.save_img()
+                    self.send_photo(msg['chat']['id'], new_image_path)
+                elif caption == 'concat':
+                    self.send_text(msg['chat']['id'], 'Please send another photo to concatenate.')
+                else:
+                    self.send_text(msg['chat']['id'],
+                                   'Unknown caption. Supported captions: Blur, Contour, Rotate, Segment, Salt and pepper, Concat.')
+
+            else:
+                self.send_text(msg['chat']['id'], 'Please send a photo for processing.')
+
+        except Exception as e:
+            logger.error(f"Error processing image: {e}")
+            self.send_text(msg['chat']['id'], 'Something went wrong... Please try again.')
