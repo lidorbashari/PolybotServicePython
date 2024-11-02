@@ -92,5 +92,5 @@ class Img:
                     self.data[i][j] = 255
                 else:
                     self.data[i][j] = 0
-        # TODO remove the `raise` below, and write your implementation
+     #   # TODO remove the `raise` below, and write your implementation
       #  raise NotImplementedError()
