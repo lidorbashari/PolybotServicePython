@@ -59,7 +59,6 @@ class Img:
             for j in range(m):
                 rotated[j][n - i - 1] = self.data[i][j]
         self.data = rotated
-        # TODO remove the `raise` below, and write your implementation
         ## raise NotImplementedError()g
 
     def salt_n_pepper(self):
@@ -69,9 +68,8 @@ class Img:
                 if random_decimal<0.2:
                     self.data[i][j] = 255
                 elif random_decimal>0.8:
-                    self.data[i][j] = 255
+                    self.data[i][j] = 0
 
-        # TODO remove the `raise` below, and write your implementation
      #   raise NotImplementedError()
 
     def concat(self, other_img):
@@ -82,7 +80,6 @@ class Img:
             concatenated_row = self.data[i] + other_img.data[i]
             concatenated_data.append(concatenated_row)
         self.data = concatenated_data
-        # TODO remove the `raise` below, and write your implementation
 
 
     def segment(self):
@@ -92,5 +89,4 @@ class Img:
                     self.data[i][j] = 255
                 else:
                     self.data[i][j] = 0
-     #   # TODO remove the `raise` below, and write your implementation
       #  raise NotImplementedError()
